@@ -27,6 +27,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final TextEditingController _controllerAno = TextEditingController();
 
   bool _isLoading = false;
+  bool _isPasswordVisible = false;
 
   late Future<Map<String, dynamic>> _salasFuture;
 
@@ -128,87 +129,109 @@ class _SignUpScreenState extends State<SignUpScreen> {
             body: Center(
               child: ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: 300),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    TextFormField(
-                      controller: _controllerNome,
-                      decoration: InputDecoration(labelText: "Nome*"),
-                    ),
-                    SizedBox(height: 30),
-                    DropdownMenu(
-                      controller: _controllerIdade,
-                      label: const Text("Selecione sua idade*"),
-                      width: 250,
-                      dropdownMenuEntries: idadeEntries,
-                    ),
-                    SizedBox(height: 30),
-                    DropdownMenu(
-                      controller: _controllerCurso,
-                      label: const Text("Selecione seu curso*"),
-                      width: 250,
-                      dropdownMenuEntries: cursosEntries,
-                    ),
-                    SizedBox(height: 30),
-                    DropdownMenu(
-                      controller: _controllerAno,
-                      label: const Text("Selecione seu ano de ingresso"),
-                      width: 250,
-                      dropdownMenuEntries: anosEntries,
-                    ),
-                    SizedBox(height: 30),
-                    TextFormField(
-                      controller: _controllerEmail,
-                      decoration: InputDecoration(labelText: "Email*"),
-                    ),
-                    SizedBox(height: 30),
-                    TextFormField(
-                      controller: _controllerPassword,
-                      decoration: InputDecoration(labelText: "Senha*"),
-                    ),
-                    SizedBox(height: 60),
-                    ElevatedButton(
-                      onPressed: _isLoading
-                          ? null
-                          : () {
-                              if (_controllerNome.text.isEmpty ||
-                                  _controllerIdade.text.isEmpty ||
-                                  _controllerCurso.text.isEmpty ||
-                                  _controllerEmail.text.isEmpty ||
-                                  _controllerPassword.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      "Por favor, preencha todos os campos obrigatórios (*).",
-                                    ),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                              } else {
-                                FirebaseAuthBloc firebaseAuthBloc =
-                                    BlocProvider.of<FirebaseAuthBloc>(context);
-                                SignInModel signInModel = SignInModel(
-                                  email: _controllerEmail.text,
-                                  password: _controllerPassword.text,
-                                );
-                                firebaseAuthBloc.add(
-                                  SignUpUser(signInModel: signInModel),
-                                );
-                              }
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      TextFormField(
+                        controller: _controllerNome,
+                        decoration: InputDecoration(labelText: "Nome*"),
+                      ),
+                      SizedBox(height: 30),
+                      DropdownMenu(
+                        controller: _controllerIdade,
+                        label: const Text("Selecione sua idade*"),
+                        width: 250,
+                        menuHeight: 300,
+                        dropdownMenuEntries: idadeEntries,
+                      ),
+                      SizedBox(height: 30),
+                      DropdownMenu(
+                        controller: _controllerCurso,
+                        label: const Text("Selecione seu curso*"),
+                        width: 250,
+                        menuHeight: 300,
+                        dropdownMenuEntries: cursosEntries,
+                      ),
+                      SizedBox(height: 30),
+                      DropdownMenu(
+                        controller: _controllerAno,
+                        label: const Text("Selecione seu ano de ingresso"),
+                        width: 250,
+                        menuHeight: 300,
+                        dropdownMenuEntries: anosEntries,
+                      ),
+                      SizedBox(height: 30),
+                      TextFormField(
+                        controller: _controllerEmail,
+                        decoration: InputDecoration(labelText: "Email*"),
+                      ),
+                      SizedBox(height: 30),
+                      TextFormField(
+                        controller: _controllerPassword,
+                        obscureText: !_isPasswordVisible,
+                        decoration: InputDecoration(
+                          labelText: "Senha*",
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _isPasswordVisible = !_isPasswordVisible;
+                              });
                             },
-                      child: _isLoading
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
-                          : const Text("Cadastrar"),
-                    ),
-                  ],
+                            icon: Icon(
+                              _isPasswordVisible
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 60),
+                      ElevatedButton(
+                        onPressed: _isLoading
+                            ? null
+                            : () {
+                                if (_controllerNome.text.isEmpty ||
+                                    _controllerIdade.text.isEmpty ||
+                                    _controllerCurso.text.isEmpty ||
+                                    _controllerEmail.text.isEmpty ||
+                                    _controllerPassword.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        "Por favor, preencha todos os campos obrigatórios (*).",
+                                      ),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                } else {
+                                  FirebaseAuthBloc firebaseAuthBloc =
+                                      BlocProvider.of<FirebaseAuthBloc>(
+                                        context,
+                                      );
+                                  SignInModel signInModel = SignInModel(
+                                    email: _controllerEmail.text,
+                                    password: _controllerPassword.text,
+                                  );
+                                  firebaseAuthBloc.add(
+                                    SignUpUser(signInModel: signInModel),
+                                  );
+                                }
+                              },
+                        child: _isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  color: Colors.white,
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text("Cadastrar"),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

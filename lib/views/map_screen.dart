@@ -216,6 +216,8 @@ class _MapScreenState extends State<MapScreen> {
             options: MapOptions(
               initialCenter: start,
               initialZoom: 18,
+              maxZoom: 23,
+              // minZoom: 17,
               onTap: (tapPosition, point) {
                 // Desativa centralização automática quando o usuário toca no mapa
                 setState(() {

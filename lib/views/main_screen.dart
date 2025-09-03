@@ -70,14 +70,16 @@ class _MainScreenState extends State<MainScreen> {
           appBar: AppBar(
             title: Text("Main Screen"),
             backgroundColor: Colors.blueGrey,
-            leading: FloatingActionButton(
-              child: Icon(Icons.logout),
-              onPressed: () {
-                FirebaseAuthBloc firebaseAuthBloc =
-                    BlocProvider.of<FirebaseAuthBloc>(context);
-                firebaseAuthBloc.add(SignOutUser());
-              },
-            ),
+            actions: [
+              // Mover para a lista de 'actions'
+              IconButton(
+                // Usar IconButton que é mais apropriado para AppBars
+                icon: Icon(Icons.logout),
+                onPressed: () {
+                  BlocProvider.of<FirebaseAuthBloc>(context).add(SignOutUser());
+                },
+              ),
+            ],
           ),
           body: Center(
             child: ConstrainedBox(

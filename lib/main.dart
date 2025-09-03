@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final firebaseAuthService = FirebaseAuthService();
     final firebaseStoreService = FirebaseStoreService(
       authService: firebaseAuthService,
@@ -27,12 +26,14 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => FirebaseAuthBloc(
-          authService: firebaseAuthService,
-        )),
-        BlocProvider(create: (context) => FirebaseStoreBloc(
-          storeService: firebaseStoreService,
-        )),
+        BlocProvider(
+          create: (context) =>
+              FirebaseAuthBloc(authService: firebaseAuthService),
+        ),
+        BlocProvider(
+          create: (context) =>
+              FirebaseStoreBloc(storeService: firebaseStoreService),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

@@ -69,7 +69,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             InsertUserData(signUpDataModel: signUpDataModel),
           );
 
-          return Navigator.pop(context);
+          Navigator.pop(context);
         } else if (state is FirebaseAuthError) {
           setState(() {
             _isLoading = false;
@@ -151,7 +151,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: _controllerCurso,
                         label: const Text("Selecione seu curso*"),
                         width: 250,
-                        menuHeight: 300,
+                        menuHeight: 200,
+                        enableFilter: true,
+                        requestFocusOnTap: true,
                         dropdownMenuEntries: cursosEntries,
                       ),
                       SizedBox(height: 30),
@@ -159,7 +161,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         controller: _controllerAno,
                         label: const Text("Selecione seu ano de ingresso"),
                         width: 250,
-                        menuHeight: 300,
+                        menuHeight: 200,
+                        enableFilter: true,
+                        requestFocusOnTap: true,
                         dropdownMenuEntries: anosEntries,
                       ),
                       SizedBox(height: 30),

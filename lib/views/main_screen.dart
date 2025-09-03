@@ -90,6 +90,9 @@ class _MainScreenState extends State<MainScreen> {
                     controller: _controllerSalaInicio,
                     label: const Text("Selecione a sala de início"),
                     width: 250,
+                    menuHeight: 200,
+                    enableFilter: true,
+                    requestFocusOnTap: true,
                     dropdownMenuEntries: inicioEntries,
                     onSelected: (Map<String, dynamic>? value) {
                       setState(() {
@@ -102,6 +105,9 @@ class _MainScreenState extends State<MainScreen> {
                     controller: _controllerSalaDestino,
                     label: const Text("Selecione a sala de destino"),
                     width: 250,
+                    menuHeight: 200,
+                    enableFilter: true,
+                    requestFocusOnTap: true,
                     dropdownMenuEntries: destinoEntries,
                     onSelected: (Map<String, dynamic>? value) {
                       setState(() {

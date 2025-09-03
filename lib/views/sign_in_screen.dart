@@ -31,7 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
           setState(() {
             _isLoading = false;
           });
-          return Navigator.pop(context);
+          Navigator.pop(context);
         } else if (state is FirebaseAuthError) {
           setState(() {
             _isLoading = false;

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "623417040228",
+    "project_id": "ftloc-5e0fe",
+    "storage_bucket": "ftloc-5e0fe.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:623417040228:android:2b1c85f12d18d5a521ae71",
+        "android_client_info": {
+          "package_name": "com.example.ft_loc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbAvakn3S05Srbo1lUfWwbD1o4ACxoWj8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

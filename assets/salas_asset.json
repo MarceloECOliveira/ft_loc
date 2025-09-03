@@ -1,0 +1,386 @@
+[
+  {
+    "id": "PA01",
+    "nome": "PA01",
+    "lat": -22.56117904,
+    "lng": -47.4244542
+  },
+  {
+    "id": "PA02",
+    "nome": "PA02",
+    "lat": -22.56117433,
+    "lng": -47.42447754
+  },
+  {
+    "id": "PA03",
+    "nome": "PA03",
+    "lat": -22.56114907,
+    "lng": -47.42442336
+  },
+  {
+    "id": "PA04",
+    "nome": "PA04",
+    "lat": -22.5611025,
+    "lng": -47.42431902
+  },
+  {
+    "id": "PA05",
+    "nome": "PA05",
+    "lat": -22.56107848,
+    "lng": -47.42423292
+  },
+  {
+    "id": "PA06",
+    "nome": "PA06",
+    "lat": -22.56108071,
+    "lng": -47.42419939
+  },
+  {
+    "id": "PA07",
+    "nome": "PA07",
+    "lat": -22.56110597,
+    "lng": -47.42425652
+  },
+  {
+    "id": "SDEF",
+    "nome": "Sala de Defesa",
+    "lat": -22.56124315,
+    "lng": -47.42402541
+  },
+  {
+    "id": "SEIS",
+    "nome": "Laboratório SEIS",
+    "lat": -22.56123547,
+    "lng": -47.42399725
+  },
+  {
+    "id": "LSLA",
+    "nome": "Laboratório de Simulação Lascado",
+    "lat": -22.56118975,
+    "lng": -47.42382784
+  },
+  {
+    "id": "LPHI",
+    "nome": "Laboratório de Pesquisa Highpids",
+    "lat": -22.56120931,
+    "lng": -47.42382516
+  },
+  {
+    "id": "SAE0",
+    "nome": "SAE",
+    "lat": -22.56135105,
+    "lng": -47.42412841
+  },
+  {
+    "id": "CAT0",
+    "nome": "CAT",
+    "lat": -22.56138969,
+    "lng": -47.42422357
+  },
+  {
+    "id": "ATJR",
+    "nome": "ATRIA Jr",
+    "lat": -22.56140772,
+    "lng": -47.42429434
+  },
+  {
+    "id": "SGRA",
+    "nome": "Secretaria de Graduação",
+    "lat": -22.56187673,
+    "lng": -47.42400111
+  },
+  {
+    "id": "SPGR",
+    "nome": "Secretaria de Pós-Graduação",
+    "lat": -22.56176556,
+    "lng": -47.42403739
+  },
+  {
+    "id": "SA09",
+    "nome": "SA09",
+    "lat": -22.56212346,
+    "lng": -47.42419605
+  },
+  {
+    "id": "SA11",
+    "nome": "SA11",
+    "lat": -22.56226217,
+    "lng": -47.42393856
+  },
+  {
+    "id": "SA13",
+    "nome": "SA13",
+    "lat": -22.56208185,
+    "lng": -47.42396324
+  },
+  {
+    "id": "SA12",
+    "nome": "SA12",
+    "lat": -22.56214823,
+    "lng": -47.42394446
+  },
+  {
+    "id": "LMEC",
+    "nome": "Laboratório de Mecânica",
+    "lat": -22.56224715,
+    "lng": -47.4230686
+  },
+  {
+    "id": "LAFA",
+    "nome": "LAFA",
+    "lat": -22.56223972,
+    "lng": -47.42284652
+  },
+  {
+    "id": "LASE",
+    "nome": "LabSE",
+    "lat": -22.56222684,
+    "lng": -47.42279609
+  },
+  {
+    "id": "LRFR",
+    "nome": "Laboratório de Rádio Frequência",
+    "lat": -22.56214498,
+    "lng": -47.42287937
+  },
+  {
+    "id": "LAFI",
+    "nome": "LAFIQ",
+    "lat": -22.56205086,
+    "lng": -47.42315349
+  },
+  {
+    "id": "LQAC",
+    "nome": "LQACNA",
+    "lat": -22.56201358,
+    "lng": -47.4229872
+  },
+  {
+    "id": "LAEG",
+    "nome": "LAEG",
+    "lat": -22.56195958,
+    "lng": -47.42296789
+  },
+  {
+    "id": "LACA",
+    "nome": "Lacan",
+    "lat": -22.56203686,
+    "lng": -47.42294214
+  },
+  {
+    "id": "LAME",
+    "nome": "Lamec",
+    "lat": -22.56198931,
+    "lng": -47.42291961
+  },
+  {
+    "id": "OXLA",
+    "nome": "OXLAB",
+    "lat": -22.56197989,
+    "lng": -47.42288259
+  },
+  {
+    "id": "LAMO",
+    "nome": "LAMOAM",
+    "lat": -22.5619685,
+    "lng": -47.42284289
+  },
+  {
+    "id": "LMIC",
+    "nome": "Laboratório de Microbiologia",
+    "lat": -22.56179759,
+    "lng": -47.42298237
+  },
+  {
+    "id": "LEMA",
+    "nome": "LEMA",
+    "lat": -22.56177926,
+    "lng": -47.4229019
+  },
+  {
+    "id": "LAMM",
+    "nome": "LAMME",
+    "lat": -22.56171165,
+    "lng": -47.42392841
+  },
+  {
+    "id": "LADC",
+    "nome": "LADESSAM (Computadores)",
+    "lat": -22.5617078,
+    "lng": -47.42387443
+  },
+  {
+    "id": "LADE",
+    "nome": "LADESSAM",
+    "lat": -22.56178233,
+    "lng": -47.42387829
+  },
+  {
+    "id": "LLCU",
+    "nome": "LAEG Laboratório de Cultivo",
+    "lat": -22.56168798,
+    "lng": -47.42379916
+  },
+  {
+    "id": "LLPR",
+    "nome": "LAEG Laboratório de Preparo",
+    "lat": -22.56166956,
+    "lng": -47.42373207
+  },
+  {
+    "id": "LLTE",
+    "nome": "LAEG Laboratório de Teste",
+    "lat": -22.56165122,
+    "lng": -47.42366114
+  },
+  {
+    "id": "LLMI",
+    "nome": "LAEG Laboratório de Microscopia",
+    "lat": -22.56164466,
+    "lng": -47.42359754
+  },
+  {
+    "id": "LHID",
+    "nome": "Laboratório de Hidráulica",
+    "lat": -22.56173377,
+    "lng": -47.42371009
+  },
+  {
+    "id": "LP01",
+    "nome": "LP01",
+    "lat": -22.56202151,
+    "lng": -47.42364517
+  },
+  {
+    "id": "LP02",
+    "nome": "LP02",
+    "lat": -22.56200169,
+    "lng": -47.42357275
+  },
+  {
+    "id": "LP03",
+    "nome": "LP03",
+    "lat": -22.56199129,
+    "lng": -47.42353895
+  },
+  {
+    "id": "LP04",
+    "nome": "LP04",
+    "lat": -22.56204281,
+    "lng": -47.42362854
+  },
+  {
+    "id": "LP05",
+    "nome": "LP05",
+    "lat": -22.56203191,
+    "lng": -47.42359313
+  },
+  {
+    "id": "LGEI",
+    "nome": "Laboratório GEICON",
+    "lat": -22.56229487,
+    "lng": -47.42380231
+  },
+  {
+    "id": "LHI0",
+    "nome": "LHI",
+    "lat": -22.56226118,
+    "lng": -47.4238125
+  },
+  {
+    "id": "LPS0",
+    "nome": "LPS",
+    "lat": -22.56222155,
+    "lng": -47.42382537
+  },
+  {
+    "id": "LA3D",
+    "nome": "Laboratório Arch 3D",
+    "lat": -22.56207492,
+    "lng": -47.42386936
+  },
+  {
+    "id": "LLIT",
+    "nome": "Laboratório Lito",
+    "lat": -22.56205163,
+    "lng": -47.42387848
+  },
+  {
+    "id": "LQUA",
+    "nome": "Laboratório de Qualidade",
+    "lat": -22.56215368,
+    "lng": -47.42399918
+  },
+  {
+    "id": "IMGL",
+    "nome": "IMAGELab",
+    "lat": -22.56216508,
+    "lng": -47.42418103
+  },
+  {
+    "id": "LOA0",
+    "nome": "LOA",
+    "lat": -22.56219628,
+    "lng": -47.42417245
+  },
+  {
+    "id": "LOT1",
+    "nome": "Laboratório de Ótica 1",
+    "lat": -22.56144438,
+    "lng": -47.42431258
+  },
+  {
+    "id": "LOT2",
+    "nome": "Laboratório de Ótica 2",
+    "lat": -22.56147485,
+    "lng": -47.42430588
+  },
+  {
+    "id": "LESO",
+    "nome": "Laboratório de Ensaio de Solos",
+    "lat": -22.5615307,
+    "lng": -47.42429025
+  },
+  {
+    "id": "LMAT",
+    "nome": "Laboratório de Materiais",
+    "lat": -22.56161343,
+    "lng": -47.42426262
+  },
+  {
+    "id": "LCCI",
+    "nome": "Laboratório de Construção Civil",
+    "lat": -22.56169467,
+    "lng": -47.42423419
+  },
+  {
+    "id": "LEDE",
+    "nome": "Laboratório de Ensaios Destrutivos",
+    "lat": -22.56170483,
+    "lng": -47.42417304
+  },
+  {
+    "id": "PROE",
+    "nome": "PROEEC",
+    "lat": -22.56226465,
+    "lng": -47.42412256
+  },
+  {
+    "id": "ECOE",
+    "nome": "ECOEDU Ambiental",
+    "lat": -22.56237215,
+    "lng": -47.42409037
+  },
+  {
+    "id": "IMPR",
+    "nome": "Impressora",
+    "lat": -22.5620656,
+    "lng": -47.42369452
+  },
+  {
+    "id": "BIBL",
+    "nome": "Biblioteca",
+    "lat": -22.56222263,
+    "lng": -47.42351319
+  }
+]

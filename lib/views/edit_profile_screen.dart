@@ -150,6 +150,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       enableFilter: true,
                       requestFocusOnTap: true,
                       dropdownMenuEntries: idadeEntries,
+                      onSelected: (String? value) {
+                        if (value != null) {
+                          _controllerIdade.text = value;
+                        }
+                      },
                     ),
                     const SizedBox(height: 30),
                     DropdownMenu(
@@ -160,6 +165,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       enableFilter: true,
                       requestFocusOnTap: true,
                       dropdownMenuEntries: cursosEntries,
+                      onSelected: (String? value) {
+                        if (value != null) {
+                          _controllerCurso.text = value;
+                        }
+                      },
                     ),
                     const SizedBox(height: 30),
                     DropdownMenu(
@@ -170,6 +180,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       enableFilter: true,
                       requestFocusOnTap: true,
                       dropdownMenuEntries: anosEntries,
+                      onSelected: (String? value) {
+                        if (value != null) {
+                          _controllerAno.text = value;
+                        }
+                      },
                     ),
                     const SizedBox(height: 60),
                     ElevatedButton(

@@ -147,6 +147,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         enableFilter: true,
                         requestFocusOnTap: true,
                         dropdownMenuEntries: idadeEntries,
+                        onSelected: (String? value) {
+                          if (value != null) {
+                            _controllerIdade.text = value;
+                          }
+                        },
                       ),
                       SizedBox(height: 30),
                       DropdownMenu(
@@ -157,6 +162,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         enableFilter: true,
                         requestFocusOnTap: true,
                         dropdownMenuEntries: cursosEntries,
+                        onSelected: (String? value) {
+                          if (value != null) {
+                            _controllerCurso.text = value;
+                          }
+                        },
                       ),
                       SizedBox(height: 30),
                       DropdownMenu(
@@ -167,6 +177,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         enableFilter: true,
                         requestFocusOnTap: true,
                         dropdownMenuEntries: anosEntries,
+                        onSelected: (String? value) {
+                          if (value != null) {
+                            _controllerAno.text = value;
+                          }
+                        },
                       ),
                       SizedBox(height: 30),
                       TextFormField(

@@ -27,6 +27,7 @@ class _MapScreenState extends State<MapScreen> {
   StreamSubscription<Position>? _positionSubscription;
   bool _isTrackingLocation = false;
   bool _centerOnUser = true;
+  bool _isLiveRouteActive = true;
 
   @override
   void initState() {
@@ -65,24 +66,26 @@ class _MapScreenState extends State<MapScreen> {
 
     _positionSubscription = _locationService.positionStream.listen(
       (Position position) {
-        setState(() {
-          _currentPosition = position;
-          _isTrackingLocation = true;
-        });
-
-        // Centraliza o mapa na posição do usuário se a opção estiver ativada
-        if (_centerOnUser) {
-          _mapController.move(
-            LatLng(position.latitude, position.longitude),
-            _mapController.camera.zoom,
-          );
+        if (mounted) {
+          setState(() {
+            _currentPosition = position;
+            _isTrackingLocation = true;
+          });
+          if (_centerOnUser) {
+            _mapController.move(
+              LatLng(position.latitude, position.longitude),
+              _mapController.camera.zoom,
+            );
+          }
         }
       },
       onError: (error) {
         debugPrint('Erro no stream de localização: $error');
-        setState(() {
-          _isTrackingLocation = false;
-        });
+        if (mounted) {
+          setState(() {
+            _isTrackingLocation = false;
+          });
+        }
       },
     );
   }
@@ -116,12 +119,14 @@ class _MapScreenState extends State<MapScreen> {
 
   /// Mostra erro de localização
   void _showLocationError() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Erro ao obter localização. Verifique as permissões.'),
-        backgroundColor: Colors.red,
-      ),
-    );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Erro ao obter localização. Verifique as permissões.'),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   /// Calcula a distância até o destino
@@ -144,33 +149,39 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final start = LatLng(widget.salaInicio["lat"], widget.salaInicio["lng"]);
-    final end = LatLng(widget.salaDestino["lat"], widget.salaDestino["lng"]);
+    final startPoint = LatLng(
+      widget.salaInicio["lat"],
+      widget.salaInicio["lng"],
+    );
+    final endPoint = LatLng(
+      widget.salaDestino["lat"],
+      widget.salaDestino["lng"],
+    );
+    final userPoint = _currentPosition != null
+        ? LatLng(_currentPosition!.latitude, _currentPosition!.longitude)
+        : null;
 
     // Lista de marcadores
     List<Marker> markers = [
       // Marcador da sala de início
       Marker(
-        point: start,
+        point: startPoint,
         child: const Icon(Icons.my_location, color: Colors.grey, size: 25),
       ),
       // Marcador da sala de destino
       Marker(
-        point: end,
+        point: endPoint,
         child: const Icon(Icons.location_pin, color: Colors.red, size: 25),
       ),
     ];
 
     // Adiciona marcador da posição atual do usuário se disponível
-    if (_currentPosition != null) {
+    if (userPoint != null) {
       markers.add(
         Marker(
           height: 25,
           width: 25,
-          point: LatLng(
-            _currentPosition!.latitude,
-            _currentPosition!.longitude,
-          ),
+          point: userPoint,
           child: Container(
             decoration: BoxDecoration(
               color: Colors.blue,
@@ -190,11 +201,23 @@ class _MapScreenState extends State<MapScreen> {
     }
 
     // Linha da rota
-    final polyline = Polyline(
-      points: [start, end],
-      strokeWidth: 3,
-      color: Colors.blue,
-    );
+    Polyline? routePolyline;
+    if (_isLiveRouteActive && userPoint != null) {
+      // Se o modo ao vivo estiver ativo e tivermos a localização do utilizador,
+      // desenha a rota a partir do utilizador até ao destino.
+      routePolyline = Polyline(
+        points: [userPoint, endPoint],
+        strokeWidth: 4,
+        color: Colors.blue,
+      );
+    } else {
+      // Caso contrário, desenha a rota padrão de sala para sala.
+      routePolyline = Polyline(
+        points: [startPoint, endPoint],
+        strokeWidth: 4,
+        color: Colors.blue,
+      );
+    }
 
     final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
 
@@ -202,7 +225,6 @@ class _MapScreenState extends State<MapScreen> {
       appBar: AppBar(
         title: Text("${widget.salaInicio["id"]} → ${widget.salaDestino["id"]}"),
         actions: [
-          // Botão para alternar rastreamento
           IconButton(
             icon: Icon(
               _isTrackingLocation ? Icons.location_on : Icons.location_off,
@@ -216,17 +238,30 @@ class _MapScreenState extends State<MapScreen> {
               }
             },
           ),
-          // Botão para centralizar no usuário
+          IconButton(
+            icon: Icon(
+              _isLiveRouteActive
+                  ? Icons.cancel_outlined
+                  : Icons.directions_walk,
+            ),
+            tooltip: _isLiveRouteActive
+                ? 'Mostrar rota original'
+                : 'Mostrar rota a partir da sua localização',
+            onPressed: () {
+              setState(() {
+                _isLiveRouteActive = !_isLiveRouteActive;
+              });
+            },
+          ),
           IconButton(
             icon: const Icon(Icons.my_location, color: Colors.blue),
             onPressed: () {
               setState(() {
                 _centerOnUser = true;
               });
-              _centerMapOnUser;
+              _centerMapOnUser();
             },
           ),
-          // Botão para centralizar no destino
           IconButton(
             icon: const Icon(Icons.location_pin, color: Colors.red),
             onPressed: _centerMapOnDestination,
@@ -238,7 +273,7 @@ class _MapScreenState extends State<MapScreen> {
           FlutterMap(
             mapController: _mapController,
             options: MapOptions(
-              initialCenter: start,
+              initialCenter: startPoint,
               initialZoom: 18,
               maxZoom: 23,
               minZoom: 17,
@@ -255,7 +290,7 @@ class _MapScreenState extends State<MapScreen> {
                 userAgentPackageName: "com.example.ft_loc",
               ),
               MarkerLayer(markers: markers),
-              PolylineLayer(polylines: [polyline]),
+              PolylineLayer(polylines: [routePolyline]),
             ],
           ),
           // Informações na parte inferior

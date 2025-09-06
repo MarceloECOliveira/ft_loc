@@ -97,9 +97,12 @@ class _MainScreenState extends State<MainScreen> {
                     requestFocusOnTap: true,
                     dropdownMenuEntries: inicioEntries,
                     onSelected: (Map<String, dynamic>? value) {
-                      setState(() {
-                        _salaInicioSelecionada = value;
-                      });
+                      if (value != null) {
+                        _controllerSalaInicio.text = value["nome"];
+                        setState(() {
+                          _salaInicioSelecionada = value;
+                        });
+                      }
                     },
                   ),
                   SizedBox(height: 30),
@@ -112,9 +115,12 @@ class _MainScreenState extends State<MainScreen> {
                     requestFocusOnTap: true,
                     dropdownMenuEntries: destinoEntries,
                     onSelected: (Map<String, dynamic>? value) {
-                      setState(() {
-                        _salaDestinoSelecionada = value;
-                      });
+                      if (value != null) {
+                        _controllerSalaDestino.text = value["nome"];
+                        setState(() {
+                          _salaDestinoSelecionada = value;
+                        });
+                      }
                     },
                   ),
                   SizedBox(height: 30),

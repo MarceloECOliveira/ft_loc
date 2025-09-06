@@ -106,6 +106,14 @@ class _MapScreenState extends State<MapScreen> {
     }
   }
 
+  /// Centraliza o mapa na posição do destino
+  void _centerMapOnDestination() {
+    _mapController.move(
+      LatLng(widget.salaDestino["lat"], widget.salaDestino["lng"]),
+      18.0, // Pode ajustar o nível de zoom se desejar
+    );
+  }
+
   /// Mostra erro de localização
   void _showLocationError() {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -144,12 +152,12 @@ class _MapScreenState extends State<MapScreen> {
       // Marcador da sala de início
       Marker(
         point: start,
-        child: const Icon(Icons.location_on, color: Colors.green, size: 25),
+        child: const Icon(Icons.my_location, color: Colors.grey, size: 25),
       ),
       // Marcador da sala de destino
       Marker(
         point: end,
-        child: const Icon(Icons.flag, color: Colors.red, size: 25),
+        child: const Icon(Icons.location_pin, color: Colors.red, size: 25),
       ),
     ];
 
@@ -157,6 +165,8 @@ class _MapScreenState extends State<MapScreen> {
     if (_currentPosition != null) {
       markers.add(
         Marker(
+          height: 25,
+          width: 25,
           point: LatLng(
             _currentPosition!.latitude,
             _currentPosition!.longitude,
@@ -165,9 +175,15 @@ class _MapScreenState extends State<MapScreen> {
             decoration: BoxDecoration(
               color: Colors.blue,
               shape: BoxShape.circle,
-              border: Border.all(color: Colors.white, width: 5),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withAlpha((0.1 * 255).round()),
+                  blurRadius: 4,
+                  offset: const Offset(0, 2),
+                ),
+              ],
             ),
-            child: const Icon(Icons.person, color: Colors.white, size: 15),
+            child: const Icon(Icons.person, color: Colors.white, size: 20),
           ),
         ),
       );
@@ -180,11 +196,11 @@ class _MapScreenState extends State<MapScreen> {
       color: Colors.blue,
     );
 
+    final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Rota: ${widget.salaInicio["nome"]} → ${widget.salaDestino["nome"]}",
-        ),
+        title: Text("${widget.salaInicio["id"]} → ${widget.salaDestino["id"]}"),
         actions: [
           // Botão para alternar rastreamento
           IconButton(
@@ -202,8 +218,18 @@ class _MapScreenState extends State<MapScreen> {
           ),
           // Botão para centralizar no usuário
           IconButton(
-            icon: const Icon(Icons.my_location),
-            onPressed: _centerMapOnUser,
+            icon: const Icon(Icons.my_location, color: Colors.blue),
+            onPressed: () {
+              setState(() {
+                _centerOnUser = true;
+              });
+              _centerMapOnUser;
+            },
+          ),
+          // Botão para centralizar no destino
+          IconButton(
+            icon: const Icon(Icons.location_pin, color: Colors.red),
+            onPressed: _centerMapOnDestination,
           ),
         ],
       ),
@@ -215,7 +241,7 @@ class _MapScreenState extends State<MapScreen> {
               initialCenter: start,
               initialZoom: 18,
               maxZoom: 23,
-              // minZoom: 17,
+              minZoom: 17,
               onTap: (tapPosition, point) {
                 // Desativa centralização automática quando o usuário toca no mapa
                 setState(() {
@@ -234,7 +260,7 @@ class _MapScreenState extends State<MapScreen> {
           ),
           // Informações na parte inferior
           Positioned(
-            bottom: 16,
+            bottom: 16 + bottomPadding,
             left: 16,
             right: 16,
             child: Container(
@@ -285,21 +311,6 @@ class _MapScreenState extends State<MapScreen> {
               ),
             ),
           ),
-          // Botão para reativar centralização automática
-          if (!_centerOnUser)
-            Positioned(
-              top: 16,
-              right: 16,
-              child: FloatingActionButton.small(
-                onPressed: () {
-                  setState(() {
-                    _centerOnUser = true;
-                  });
-                  _centerMapOnUser();
-                },
-                child: const Icon(Icons.center_focus_strong),
-              ),
-            ),
         ],
       ),
     );

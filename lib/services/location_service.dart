@@ -1,5 +1,3 @@
-// TODO Verificar
-
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:geolocator/geolocator.dart';

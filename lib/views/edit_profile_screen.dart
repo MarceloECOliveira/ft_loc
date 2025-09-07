@@ -88,149 +88,149 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Edit Profile Screen"),
-          backgroundColor: Colors.blueGrey,
         ),
-        body: FutureBuilder(
-          future: _signUpDataFuture,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            if (snapshot.hasData == false) {
-              return const Center(
-                child: Text("Erro ao carregar dados do formulário."),
-              );
-            }
-
-            final data = snapshot.data!;
-            final List<DropdownMenuEntry<String>> idadeEntries =
-                (data["idades"] as List<dynamic>)
-                    .map(
-                      (idade) => DropdownMenuEntry(
-                        value: idade.toString(),
-                        label: idade.toString(),
+        body: SafeArea(
+          child: FutureBuilder(
+            future: _signUpDataFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (snapshot.hasData == false) {
+                return const Center(
+                  child: Text("Erro ao carregar dados do formulário."),
+                );
+              }
+          
+              final data = snapshot.data!;
+              final List<DropdownMenuEntry<String>> idadeEntries =
+                  (data["idades"] as List<dynamic>)
+                      .map(
+                        (idade) => DropdownMenuEntry(
+                          value: idade.toString(),
+                          label: idade.toString(),
+                        ),
+                      )
+                      .toList();
+              final List<DropdownMenuEntry<String>> cursosEntries =
+                  (data["cursos"] as List<dynamic>)
+                      .map(
+                        (curso) => DropdownMenuEntry(
+                          value: curso.toString(),
+                          label: curso.toString(),
+                        ),
+                      )
+                      .toList();
+              final List<DropdownMenuEntry<String>> anosEntries =
+                  (data["anos_ingresso"] as List<dynamic>)
+                      .map(
+                        (ano) => DropdownMenuEntry(
+                          value: ano.toString(),
+                          label: ano.toString(),
+                        ),
+                      )
+                      .toList();
+          
+              return Center(
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(maxWidth: 300),
+                  child: ListView(
+                    shrinkWrap: true,
+                    children: [
+                      TextFormField(
+                        controller: _controllerNome,
+                        decoration: const InputDecoration(labelText: "Nome*"),
                       ),
-                    )
-                    .toList();
-            final List<DropdownMenuEntry<String>> cursosEntries =
-                (data["cursos"] as List<dynamic>)
-                    .map(
-                      (curso) => DropdownMenuEntry(
-                        value: curso.toString(),
-                        label: curso.toString(),
+                      const SizedBox(height: 30),
+                      DropdownMenu(
+                        controller: _controllerIdade,
+                        label: const Text("Selecione sua idade*"),
+                        width: 250,
+                        menuHeight: 200,
+                        enableFilter: true,
+                        requestFocusOnTap: true,
+                        dropdownMenuEntries: idadeEntries,
+                        onSelected: (String? value) {
+                          if (value != null) {
+                            _controllerIdade.text = value;
+                          }
+                        },
                       ),
-                    )
-                    .toList();
-            final List<DropdownMenuEntry<String>> anosEntries =
-                (data["anos_ingresso"] as List<dynamic>)
-                    .map(
-                      (ano) => DropdownMenuEntry(
-                        value: ano.toString(),
-                        label: ano.toString(),
+                      const SizedBox(height: 30),
+                      DropdownMenu(
+                        controller: _controllerCurso,
+                        label: const Text("Selecione seu curso*"),
+                        width: 250,
+                        menuHeight: 200,
+                        enableFilter: true,
+                        requestFocusOnTap: true,
+                        dropdownMenuEntries: cursosEntries,
+                        onSelected: (String? value) {
+                          if (value != null) {
+                            _controllerCurso.text = value;
+                          }
+                        },
                       ),
-                    )
-                    .toList();
-
-            return Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 300),
-                child: ListView(
-                  shrinkWrap: true,
-                  children: [
-                    TextFormField(
-                      controller: _controllerNome,
-                      decoration: const InputDecoration(labelText: "Nome*"),
-                    ),
-                    const SizedBox(height: 30),
-                    DropdownMenu(
-                      controller: _controllerIdade,
-                      label: const Text("Selecione sua idade*"),
-                      width: 250,
-                      menuHeight: 200,
-                      enableFilter: true,
-                      requestFocusOnTap: true,
-                      dropdownMenuEntries: idadeEntries,
-                      onSelected: (String? value) {
-                        if (value != null) {
-                          _controllerIdade.text = value;
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                    DropdownMenu(
-                      controller: _controllerCurso,
-                      label: const Text("Selecione seu curso*"),
-                      width: 250,
-                      menuHeight: 200,
-                      enableFilter: true,
-                      requestFocusOnTap: true,
-                      dropdownMenuEntries: cursosEntries,
-                      onSelected: (String? value) {
-                        if (value != null) {
-                          _controllerCurso.text = value;
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 30),
-                    DropdownMenu(
-                      controller: _controllerAno,
-                      label: const Text("Selecione seu ano de ingresso"),
-                      width: 250,
-                      menuHeight: 200,
-                      enableFilter: true,
-                      requestFocusOnTap: true,
-                      dropdownMenuEntries: anosEntries,
-                      onSelected: (String? value) {
-                        if (value != null) {
-                          _controllerAno.text = value;
-                        }
-                      },
-                    ),
-                    const SizedBox(height: 60),
-                    ElevatedButton(
-                      onPressed: _isLoading
-                          ? null
-                          : () {
-                              if (_controllerNome.text.isNotEmpty &&
-                                  _controllerIdade.text.isNotEmpty &&
-                                  _controllerCurso.text.isNotEmpty) {
-                                final updatedModel = SignUpDataModel(
-                                  nome: _controllerNome.text,
-                                  idade: _controllerIdade.text,
-                                  curso: _controllerCurso.text,
-                                  anoDeIngresso: _controllerAno.text,
-                                );
-
-                                BlocProvider.of<FirebaseStoreBloc>(context).add(
-                                  UpdateUserData(signUpDataModel: updatedModel),
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                      "Por favor, preencha todos os campos obrigatórios (*).",
+                      const SizedBox(height: 30),
+                      DropdownMenu(
+                        controller: _controllerAno,
+                        label: const Text("Selecione seu ano de ingresso"),
+                        width: 250,
+                        menuHeight: 200,
+                        enableFilter: true,
+                        requestFocusOnTap: true,
+                        dropdownMenuEntries: anosEntries,
+                        onSelected: (String? value) {
+                          if (value != null) {
+                            _controllerAno.text = value;
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 60),
+                      ElevatedButton(
+                        onPressed: _isLoading
+                            ? null
+                            : () {
+                                if (_controllerNome.text.isNotEmpty &&
+                                    _controllerIdade.text.isNotEmpty &&
+                                    _controllerCurso.text.isNotEmpty) {
+                                  final updatedModel = SignUpDataModel(
+                                    nome: _controllerNome.text,
+                                    idade: _controllerIdade.text,
+                                    curso: _controllerCurso.text,
+                                    anoDeIngresso: _controllerAno.text,
+                                  );
+          
+                                  BlocProvider.of<FirebaseStoreBloc>(context).add(
+                                    UpdateUserData(signUpDataModel: updatedModel),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        "Por favor, preencha todos os campos obrigatórios (*).",
+                                      ),
+                                      backgroundColor: Colors.red,
                                     ),
-                                    backgroundColor: Colors.red,
-                                  ),
-                                );
-                              }
-                            },
-                      child: _isLoading
-                          ? const SizedBox(
-                              height: 20,
-                              width: 20,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 2,
-                              ),
-                            )
-                          : const Text("Salvar Alterações"),
-                    ),
-                  ],
+                                  );
+                                }
+                              },
+                        child: _isLoading
+                            ? const SizedBox(
+                                height: 20,
+                                width: 20,
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
+                                ),
+                              )
+                            : const Text("Salvar Alterações"),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

@@ -22,23 +22,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile Screen"),
-        backgroundColor: Colors.blueGrey,
-      ),
-      body: BlocBuilder<FirebaseStoreBloc, FirebaseStoreState>(
-        builder: (context, state) {
-          if (state is StoreLoading || state is StoreInitial) {
-            return const Center(child: CircularProgressIndicator());
-          }
+      appBar: AppBar(title: Text("Profile Screen")),
+      body: SafeArea(
+        child: BlocBuilder<FirebaseStoreBloc, FirebaseStoreState>(
+          builder: (context, state) {
+            if (state is StoreLoading || state is StoreInitial) {
+              return const Center(child: CircularProgressIndicator());
+            }
 
-          if (state is StoreUserDataLoaded) {
-            final userData = state.userData;
-            return ListView(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
+            if (state is StoreUserDataLoaded) {
+              final userData = state.userData;
+              return Center(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(maxWidth: 300),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       ListTile(
                         leading: const Icon(Icons.person_outline),
@@ -63,49 +62,49 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         title: const Text("Ano de Ingresso"),
                         subtitle: Text(userData.anoDeIngresso),
                       ),
+                      const SizedBox(height: 40),
+                      ElevatedButton(
+                        onPressed: () async {
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EditProfileScreen(initialUserData: userData),
+                            ),
+                          );
+
+                          if (result == true && context.mounted) {
+                            BlocProvider.of<FirebaseStoreBloc>(
+                              context,
+                            ).add(FetchUserData());
+                          }
+                        },
+                        child: const Text("Editar informações"),
+                      ),
                     ],
                   ),
                 ),
-                const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: () async {
-                    final result = await Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            EditProfileScreen(initialUserData: userData),
-                      ),
-                    );
+              );
+            }
 
-                    if (result == true && context.mounted) {
-                      BlocProvider.of<FirebaseStoreBloc>(
-                        context,
-                      ).add(FetchUserData());
-                    }
-                  },
-                  child: const Text("Editar informações"),
+            if (state is StoreUserDataEmpty) {
+              return const Center(
+                child: Text(
+                  "Nenhum perfil encontrado.\nUsuários convidados não possuem dados de perfil.",
+                  textAlign: TextAlign.center,
                 ),
-              ],
-            );
-          }
+              );
+            }
 
-          if (state is StoreUserDataEmpty) {
-            return const Center(
-              child: Text(
-                "Nenhum perfil encontrado.\nUsuários convidados não possuem dados de perfil.",
-                textAlign: TextAlign.center,
-              ),
-            );
-          }
+            if (state is StoreError) {
+              return Center(
+                child: Text("Ocorreu um erro: ${state.errorMessage}"),
+              );
+            }
 
-          if (state is StoreError) {
-            return Center(
-              child: Text("Ocorreu um erro: ${state.errorMessage}"),
-            );
-          }
-
-          return const Center(child: Text("Nenhum dado para exibir."));
-        },
+            return const Center(child: Text("Nenhum dado para exibir."));
+          },
+        ),
       ),
     );
   }

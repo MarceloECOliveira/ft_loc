@@ -69,8 +69,18 @@ class _MainScreenState extends State<MainScreen> {
         return Scaffold(
           appBar: AppBar(
             title: Text("Main Screen"),
-            backgroundColor: Colors.blueGrey,
             actions: [
+              IconButton(
+                icon: Icon(Icons.person),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfileScreen(),
+                    ),
+                  );
+                },
+              ),
               // Mover para a lista de 'actions'
               IconButton(
                 // Usar IconButton que é mais apropriado para AppBars
@@ -81,87 +91,80 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ],
           ),
-          body: Center(
-            child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 300),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  DropdownMenu(
-                    controller: _controllerSalaInicio,
-                    label: const Text("Selecione a sala de início"),
-                    width: 250,
-                    menuHeight: 200,
-                    enableFilter: true,
-                    requestFocusOnTap: true,
-                    dropdownMenuEntries: inicioEntries,
-                    onSelected: (Map<String, dynamic>? value) {
-                      if (value != null) {
-                        _controllerSalaInicio.text = value["nome"];
-                        setState(() {
-                          _salaInicioSelecionada = value;
-                        });
-                      }
-                    },
-                  ),
-                  SizedBox(height: 30),
-                  DropdownMenu(
-                    controller: _controllerSalaDestino,
-                    label: const Text("Selecione a sala de destino"),
-                    width: 250,
-                    menuHeight: 200,
-                    enableFilter: true,
-                    requestFocusOnTap: true,
-                    dropdownMenuEntries: destinoEntries,
-                    onSelected: (Map<String, dynamic>? value) {
-                      if (value != null) {
-                        _controllerSalaDestino.text = value["nome"];
-                        setState(() {
-                          _salaDestinoSelecionada = value;
-                        });
-                      }
-                    },
-                  ),
-                  SizedBox(height: 30),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_salaInicioSelecionada != null &&
-                          _salaDestinoSelecionada != null) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => MapScreen(
-                              salaInicio: _salaInicioSelecionada!,
-                              salaDestino: _salaDestinoSelecionada!,
+          body: SafeArea(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 300),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    DropdownMenu(
+                      controller: _controllerSalaInicio,
+                      label: const Text("Selecione a sala de início"),
+                      width: 250,
+                      menuHeight: 200,
+                      enableFilter: true,
+                      requestFocusOnTap: true,
+                      dropdownMenuEntries: inicioEntries,
+                      onSelected: (Map<String, dynamic>? value) {
+                        if (value != null) {
+                          _controllerSalaInicio.text = value["nome"];
+                          setState(() {
+                            _salaInicioSelecionada = value;
+                          });
+                        }
+                      },
+                    ),
+                    SizedBox(height: 30),
+                    DropdownMenu(
+                      controller: _controllerSalaDestino,
+                      label: const Text("Selecione a sala de destino"),
+                      width: 250,
+                      menuHeight: 200,
+                      enableFilter: true,
+                      requestFocusOnTap: true,
+                      dropdownMenuEntries: destinoEntries,
+                      onSelected: (Map<String, dynamic>? value) {
+                        if (value != null) {
+                          _controllerSalaDestino.text = value["nome"];
+                          setState(() {
+                            _salaDestinoSelecionada = value;
+                          });
+                        }
+                      },
+                    ),
+                    SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        if (_salaInicioSelecionada != null &&
+                            _salaDestinoSelecionada != null) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => MapScreen(
+                                salaInicio: _salaInicioSelecionada!,
+                                salaDestino: _salaDestinoSelecionada!,
+                              ),
                             ),
-                          ),
-                        );
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text(
-                              "Por favor, selecione ambas as salas",
+                          );
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Por favor, selecione ambas as salas",
+                              ),
+                              backgroundColor: Colors.red,
                             ),
-                            backgroundColor: Colors.red,
-                          ),
-                        );
-                      }
-                    },
-                    child: Text("Traçar rota"),
-                  ),
-                ],
+                          );
+                        }
+                      },
+                      child: Text("Traçar rota"),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.person),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ProfileScreen()),
-              );
-            },
           ),
         );
       },

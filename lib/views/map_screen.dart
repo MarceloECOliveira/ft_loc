@@ -200,24 +200,17 @@ class _MapScreenState extends State<MapScreen> {
       );
     }
 
-    // Linha da rota
-    Polyline? routePolyline;
-    if (_isLiveRouteActive && userPoint != null) {
-      // Se o modo ao vivo estiver ativo e tivermos a localização do utilizador,
-      // desenha a rota a partir do utilizador até ao destino.
-      routePolyline = Polyline(
-        points: [userPoint, endPoint],
-        strokeWidth: 4,
-        color: Colors.blue,
-      );
-    } else {
-      // Caso contrário, desenha a rota padrão de sala para sala.
-      routePolyline = Polyline(
-        points: [startPoint, endPoint],
-        strokeWidth: 4,
-        color: Colors.blue,
-      );
-    }
+    // Determina os pontos da rota primeiro
+    final routePoints = (_isLiveRouteActive && userPoint != null)
+        ? [userPoint, endPoint] // Pontos para a rota "ao vivo"
+        : [startPoint, endPoint]; // Pontos para a rota padrão
+
+    // Cria a Polyline uma única vez
+    final routePolyline = Polyline(
+      points: routePoints,
+      strokeWidth: 4,
+      color: Colors.blue,
+    );
 
     final bottomPadding = MediaQuery.of(context).viewPadding.bottom;
 

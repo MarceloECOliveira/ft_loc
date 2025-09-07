@@ -98,6 +98,9 @@ class _MainScreenState extends State<MainScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Image.asset("assets/icon.png", width: 120, height: 120),
+                    const SizedBox(height: 30),
+
                     DropdownMenu(
                       controller: _controllerSalaInicio,
                       label: const Text("Selecione a sala de início"),

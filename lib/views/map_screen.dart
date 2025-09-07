@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:ft_loc/services/location_service.dart'; // Importe o serviço de localização
+import 'package:ft_loc/services/location_service.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -27,7 +27,7 @@ class _MapScreenState extends State<MapScreen> {
   StreamSubscription<Position>? _positionSubscription;
   bool _isTrackingLocation = false;
   bool _centerOnUser = true;
-  bool _isLiveRouteActive = true;
+  bool _isLiveRouteActive = false;
 
   @override
   void initState() {
@@ -41,10 +41,8 @@ class _MapScreenState extends State<MapScreen> {
     super.dispose();
   }
 
-  /// Inicializa a localização do usuário
   Future<void> _initializeLocation() async {
     try {
-      // Obtém a posição atual
       Position? position = await _locationService.getCurrentPosition();
       if (position != null) {
         setState(() {
@@ -52,15 +50,13 @@ class _MapScreenState extends State<MapScreen> {
         });
       }
 
-      // Inicia o rastreamento em tempo real
       await _startLocationTracking();
     } catch (e) {
-      debugPrint('Erro ao inicializar localização: $e');
+      debugPrint("Erro ao inicializar localização: $e");
       _showLocationError();
     }
   }
 
-  /// Inicia o rastreamento da localização em tempo real
   Future<void> _startLocationTracking() async {
     await _locationService.startLocationTracking();
 
@@ -80,7 +76,7 @@ class _MapScreenState extends State<MapScreen> {
         }
       },
       onError: (error) {
-        debugPrint('Erro no stream de localização: $error');
+        debugPrint("Erro no stream de localização: $error");
         if (mounted) {
           setState(() {
             _isTrackingLocation = false;
@@ -90,7 +86,6 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  /// Para o rastreamento da localização
   void _stopLocationTracking() {
     _positionSubscription?.cancel();
     _locationService.stopLocationTracking();
@@ -99,39 +94,48 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
-  /// Centraliza o mapa na posição atual do usuário
-  void _centerMapOnUser() {
-    if (_currentPosition != null) {
-      _mapController.move(
-        LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
-        18.0,
+  void _centerMapOnUser() async {
+    bool hasPermission = await _locationService.requestLocationPermission();
+
+    if (hasPermission && mounted) {
+      if (_currentPosition != null) {
+        _mapController.move(
+          LatLng(_currentPosition!.latitude, _currentPosition!.longitude),
+          18.0,
+        );
+      }
+    } else if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Para usar esta função, por favor, ative a permissão de localização.",
+          ),
+          backgroundColor: Colors.orange,
+        ),
       );
     }
   }
 
-  /// Centraliza o mapa na posição do destino
   void _centerMapOnDestination() {
     _mapController.move(
       LatLng(widget.salaDestino["lat"], widget.salaDestino["lng"]),
-      18.0, // Pode ajustar o nível de zoom se desejar
+      18.0,
     );
   }
 
-  /// Mostra erro de localização
   void _showLocationError() {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Erro ao obter localização. Verifique as permissões.'),
+          content: Text("Erro ao obter localização. Verifique as permissões."),
           backgroundColor: Colors.red,
         ),
       );
     }
   }
 
-  /// Calcula a distância até o destino
   String _getDistanceToDestination() {
-    if (_currentPosition == null) return '';
+    if (_currentPosition == null) return "";
 
     double distance = _locationService.calculateDistance(
       _currentPosition!.latitude,
@@ -141,9 +145,9 @@ class _MapScreenState extends State<MapScreen> {
     );
 
     if (distance < 1000) {
-      return '${distance.toStringAsFixed(0)}m até o destino';
+      return "${distance.toStringAsFixed(0)}m até o destino";
     } else {
-      return '${(distance / 1000).toStringAsFixed(1)}km até o destino';
+      return "${(distance / 1000).toStringAsFixed(1)}km até o destino";
     }
   }
 
@@ -161,21 +165,18 @@ class _MapScreenState extends State<MapScreen> {
         ? LatLng(_currentPosition!.latitude, _currentPosition!.longitude)
         : null;
 
-    // Lista de marcadores
     List<Marker> markers = [
-      // Marcador da sala de início
       Marker(
         point: startPoint,
         child: const Icon(Icons.my_location, color: Colors.grey, size: 25),
       ),
-      // Marcador da sala de destino
+
       Marker(
         point: endPoint,
         child: const Icon(Icons.location_pin, color: Colors.red, size: 25),
       ),
     ];
 
-    // Adiciona marcador da posição atual do usuário se disponível
     if (userPoint != null) {
       markers.add(
         Marker(
@@ -200,12 +201,10 @@ class _MapScreenState extends State<MapScreen> {
       );
     }
 
-    // Determina os pontos da rota primeiro
     final routePoints = (_isLiveRouteActive && userPoint != null)
-        ? [userPoint, endPoint] // Pontos para a rota "ao vivo"
-        : [startPoint, endPoint]; // Pontos para a rota padrão
+        ? [userPoint, endPoint]
+        : [startPoint, endPoint];
 
-    // Cria a Polyline uma única vez
     final routePolyline = Polyline(
       points: routePoints,
       strokeWidth: 4,
@@ -224,37 +223,67 @@ class _MapScreenState extends State<MapScreen> {
               color: _isLiveRouteActive ? Colors.greenAccent : Colors.grey,
             ),
             tooltip: _isLiveRouteActive
-                ? 'Mostrar rota a partir da sua localização'
-                : 'Mostrar rota original',
-            onPressed: () {
-              setState(() {
-                _isLiveRouteActive = !_isLiveRouteActive;
-              });
+                ? "Mostrar rota a partir da sua localização"
+                : "Mostrar rota original",
+            onPressed: () async {
+              if (!_isLiveRouteActive) {
+                bool hasPermission = await _locationService
+                    .requestLocationPermission();
+                if (hasPermission) {
+                  setState(() {
+                    _isLiveRouteActive = true;
+                  });
+                } else if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "Para usar esta função, por favor, ative a permissão de localização.",
+                      ),
+                      backgroundColor: Colors.orange,
+                    ),
+                  );
+                }
+              } else {
+                setState(() {
+                  _isLiveRouteActive = false;
+                });
+              }
             },
           ),
 
-          // Ação 2: O menu "overflow" com as outras ações
           PopupMenuButton<String>(
-            onSelected: (value) {
-              // Lógica para cada item do menu
-              if (value == 'toggle_tracking') {
+            onSelected: (value) async {
+              if (value == "toggle_tracking") {
                 if (_isTrackingLocation) {
                   _stopLocationTracking();
                 } else {
-                  _startLocationTracking();
+                  bool hasPermission = await _locationService
+                      .requestLocationPermission();
+                  if (hasPermission) {
+                    _startLocationTracking();
+                  } else if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          "Para usar esta função, por favor, ative a permissão de localização.",
+                        ),
+                        backgroundColor: Colors.orange,
+                      ),
+                    );
+                  }
                 }
-              } else if (value == 'center_user') {
+              } else if (value == "center_user") {
                 setState(() {
                   _centerOnUser = true;
                 });
                 _centerMapOnUser();
-              } else if (value == 'center_destination') {
+              } else if (value == "center_destination") {
                 _centerMapOnDestination();
               }
             },
             itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
               PopupMenuItem<String>(
-                value: 'toggle_tracking',
+                value: "toggle_tracking",
                 child: ListTile(
                   leading: Icon(
                     _isTrackingLocation
@@ -263,23 +292,23 @@ class _MapScreenState extends State<MapScreen> {
                   ),
                   title: Text(
                     _isTrackingLocation
-                        ? 'Parar Localização'
-                        : 'Iniciar Localização',
+                        ? "Parar Localização"
+                        : "Iniciar Localização",
                   ),
                 ),
               ),
               const PopupMenuItem<String>(
-                value: 'center_user',
+                value: "center_user",
                 child: ListTile(
                   leading: Icon(Icons.my_location),
-                  title: Text('Centralizar em Mim'),
+                  title: Text("Centralizar em Mim"),
                 ),
               ),
               const PopupMenuItem<String>(
-                value: 'center_destination',
+                value: "center_destination",
                 child: ListTile(
                   leading: Icon(Icons.location_pin),
-                  title: Text('Centralizar no Destino'),
+                  title: Text("Centralizar no Destino"),
                 ),
               ),
             ],
@@ -296,7 +325,6 @@ class _MapScreenState extends State<MapScreen> {
               maxZoom: 23,
               minZoom: 17,
               onTap: (tapPosition, point) {
-                // Desativa centralização automática quando o usuário toca no mapa
                 setState(() {
                   _centerOnUser = false;
                 });
@@ -311,7 +339,7 @@ class _MapScreenState extends State<MapScreen> {
               PolylineLayer(polylines: [routePolyline]),
             ],
           ),
-          // Informações na parte inferior
+
           Positioned(
             bottom: 16 + bottomPadding,
             left: 16,
@@ -342,8 +370,8 @@ class _MapScreenState extends State<MapScreen> {
                       const SizedBox(width: 8),
                       Text(
                         _isTrackingLocation
-                            ? 'Localização ativa'
-                            : 'Localização inativa',
+                            ? "Localização ativa"
+                            : "Localização inativa",
                         style: TextStyle(
                           color: _isTrackingLocation
                               ? Colors.green

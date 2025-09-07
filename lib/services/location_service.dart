@@ -11,26 +11,21 @@ class LocationService {
   StreamController<Position>? _positionController;
   StreamSubscription<Position>? _positionSubscription;
 
-  
   Stream<Position> get positionStream {
     _positionController ??= StreamController<Position>.broadcast();
     return _positionController!.stream;
   }
 
-  
   Future<bool> isLocationServiceEnabled() async {
     return await Geolocator.isLocationServiceEnabled();
   }
 
-  
   Future<bool> requestLocationPermission() async {
-    
     bool serviceEnabled = await isLocationServiceEnabled();
     if (!serviceEnabled) {
       return false;
     }
 
-    
     LocationPermission permission = await Geolocator.checkPermission();
 
     if (permission == LocationPermission.denied) {
@@ -41,7 +36,6 @@ class LocationService {
     }
 
     if (permission == LocationPermission.deniedForever) {
-      
       await openAppSettings();
       return false;
     }
@@ -49,7 +43,6 @@ class LocationService {
     return true;
   }
 
-  
   Future<Position?> getCurrentPosition() async {
     try {
       bool hasPermission = await requestLocationPermission();
@@ -70,7 +63,6 @@ class LocationService {
     }
   }
 
-  
   Future<void> startLocationTracking() async {
     try {
       bool hasPermission = await requestLocationPermission();
@@ -78,18 +70,15 @@ class LocationService {
         return;
       }
 
-      
       LocationSettings locationSettings = const LocationSettings(
         accuracy: LocationAccuracy.high,
-        distanceFilter: 5, 
+        distanceFilter: 5,
       );
 
-      
       await stopLocationTracking();
 
       _positionController ??= StreamController<Position>.broadcast();
 
-      
       _positionSubscription =
           Geolocator.getPositionStream(
             locationSettings: locationSettings,
@@ -106,13 +95,11 @@ class LocationService {
     }
   }
 
-  
   Future<void> stopLocationTracking() async {
     await _positionSubscription?.cancel();
     _positionSubscription = null;
   }
 
-  
   double calculateDistance(
     double startLatitude,
     double startLongitude,
@@ -127,7 +114,6 @@ class LocationService {
     );
   }
 
-  
   void dispose() {
     stopLocationTracking();
     _positionController?.close();

@@ -122,9 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   .toList();
 
           return Scaffold(
-            appBar: AppBar(
-              title: Text("Cadastrar-se"),
-            ),
+            appBar: AppBar(title: Text("Cadastrar-se")),
             body: SafeArea(
               child: Center(
                 child: ConstrainedBox(

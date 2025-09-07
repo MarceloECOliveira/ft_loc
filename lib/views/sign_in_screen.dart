@@ -45,9 +45,7 @@ class _SignInScreenState extends State<SignInScreen> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Entrar"),
-        ),
+        appBar: AppBar(title: Text("Entrar")),
         body: SafeArea(
           child: Center(
             child: ConstrainedBox(
@@ -112,9 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ? const SizedBox(
                               height: 20,
                               width: 20,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                              ),
+                              child: CircularProgressIndicator(strokeWidth: 2),
                             )
                           : const Text("Entrar"),
                     ),

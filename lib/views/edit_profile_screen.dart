@@ -86,9 +86,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         }
       },
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Edição de Perfil"),
-        ),
+        appBar: AppBar(title: const Text("Edição de Perfil")),
         body: SafeArea(
           child: FutureBuilder(
             future: _signUpDataFuture,
@@ -101,7 +99,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   child: Text("Erro ao carregar dados do formulário."),
                 );
               }
-          
+
               final data = snapshot.data!;
               final List<DropdownMenuEntry<String>> idadeEntries =
                   (data["idades"] as List<dynamic>)
@@ -130,7 +128,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         ),
                       )
                       .toList();
-          
+
               return Center(
                 child: ConstrainedBox(
                   constraints: const BoxConstraints(maxWidth: 300),
@@ -200,9 +198,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                                     curso: _controllerCurso.text,
                                     anoDeIngresso: _controllerAno.text,
                                   );
-          
-                                  BlocProvider.of<FirebaseStoreBloc>(context).add(
-                                    UpdateUserData(signUpDataModel: updatedModel),
+
+                                  BlocProvider.of<FirebaseStoreBloc>(
+                                    context,
+                                  ).add(
+                                    UpdateUserData(
+                                      signUpDataModel: updatedModel,
+                                    ),
                                   );
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(

@@ -68,7 +68,7 @@ class _MainScreenState extends State<MainScreen> {
 
         return Scaffold(
           appBar: AppBar(
-            title: Text("Main Screen"),
+            title: Text("FT Loc"),
             actions: [
               IconButton(
                 icon: Icon(Icons.person),

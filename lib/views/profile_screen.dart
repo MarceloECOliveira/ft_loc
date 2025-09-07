@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Profile Screen")),
+      appBar: AppBar(title: Text("Perfil")),
       body: SafeArea(
         child: BlocBuilder<FirebaseStoreBloc, FirebaseStoreState>(
           builder: (context, state) {

@@ -220,44 +220,69 @@ class _MapScreenState extends State<MapScreen> {
         actions: [
           IconButton(
             icon: Icon(
-              _isTrackingLocation ? Icons.location_on : Icons.location_off,
-              color: _isTrackingLocation ? Colors.green : Colors.grey,
-            ),
-            onPressed: () {
-              if (_isTrackingLocation) {
-                _stopLocationTracking();
-              } else {
-                _startLocationTracking();
-              }
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              _isLiveRouteActive
-                  ? Icons.cancel_outlined
-                  : Icons.directions_walk,
+              Icons.directions_walk,
+              color: _isLiveRouteActive ? Colors.greenAccent : Colors.grey,
             ),
             tooltip: _isLiveRouteActive
-                ? 'Mostrar rota original'
-                : 'Mostrar rota a partir da sua localização',
+                ? 'Mostrar rota a partir da sua localização'
+                : 'Mostrar rota original',
             onPressed: () {
               setState(() {
                 _isLiveRouteActive = !_isLiveRouteActive;
               });
             },
           ),
-          IconButton(
-            icon: const Icon(Icons.my_location, color: Colors.blue),
-            onPressed: () {
-              setState(() {
-                _centerOnUser = true;
-              });
-              _centerMapOnUser();
+
+          // Ação 2: O menu "overflow" com as outras ações
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              // Lógica para cada item do menu
+              if (value == 'toggle_tracking') {
+                if (_isTrackingLocation) {
+                  _stopLocationTracking();
+                } else {
+                  _startLocationTracking();
+                }
+              } else if (value == 'center_user') {
+                setState(() {
+                  _centerOnUser = true;
+                });
+                _centerMapOnUser();
+              } else if (value == 'center_destination') {
+                _centerMapOnDestination();
+              }
             },
-          ),
-          IconButton(
-            icon: const Icon(Icons.location_pin, color: Colors.red),
-            onPressed: _centerMapOnDestination,
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              PopupMenuItem<String>(
+                value: 'toggle_tracking',
+                child: ListTile(
+                  leading: Icon(
+                    _isTrackingLocation
+                        ? Icons.location_on
+                        : Icons.location_off,
+                  ),
+                  title: Text(
+                    _isTrackingLocation
+                        ? 'Parar Localização'
+                        : 'Iniciar Localização',
+                  ),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'center_user',
+                child: ListTile(
+                  leading: Icon(Icons.my_location),
+                  title: Text('Centralizar em Mim'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'center_destination',
+                child: ListTile(
+                  leading: Icon(Icons.location_pin),
+                  title: Text('Centralizar no Destino'),
+                ),
+              ),
+            ],
           ),
         ],
       ),

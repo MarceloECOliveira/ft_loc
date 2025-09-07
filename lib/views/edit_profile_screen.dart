@@ -87,7 +87,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text("Edit Profile Screen"),
+          title: const Text("Edição de Perfil"),
         ),
         body: SafeArea(
           child: FutureBuilder(

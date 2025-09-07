@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
             foregroundColor: Colors.white, // Texto e ícones brancos na AppBar
             elevation: 2.0,
             titleTextStyle: TextStyle(
-              fontSize: 20,
+              fontSize: 30,
               fontWeight: FontWeight.w500,
               color: Colors.white,
             ),

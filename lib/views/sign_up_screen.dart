@@ -123,7 +123,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
           return Scaffold(
             appBar: AppBar(
-              title: Text("Sign Up Screen"),
+              title: Text("Cadastrar-se"),
             ),
             body: SafeArea(
               child: Center(

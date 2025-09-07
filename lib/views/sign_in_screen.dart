@@ -46,7 +46,7 @@ class _SignInScreenState extends State<SignInScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Sign In Screen"),
+          title: Text("Entrar"),
         ),
         body: SafeArea(
           child: Center(

@@ -11,9 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("FT Loc"),
-      ),
+      appBar: AppBar(title: Text("FT Loc")),
       body: SafeArea(
         child: Center(
           child: ConstrainedBox(
@@ -22,37 +20,49 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  textAlign: TextAlign.center,
-                  textWidthBasis: TextWidthBasis.parent,
-                  "Este é o FT Loc um aplicativo desenvolvido com o intuito de facilitar a navegação na Faculdade de Tecnologia da Unicamp",
+                Image.asset(
+                  'assets/icon.png', // O mesmo caminho do pubspec.yaml
+                  width: 150, // Ajuste o tamanho como desejar
+                  height: 150,
                 ),
-                SizedBox(height: 120),
+                const SizedBox(
+                  height: 40,
+                ), // Espaçamento entre o ícone e o texto
+
+                const Text(
+                  "Este é o FT Loc, um aplicativo desenvolvido com o intuito de facilitar a navegação na Faculdade de Tecnologia da Unicamp",
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 60), // Espaçamento ajustado
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignInScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const SignInScreen(),
+                      ),
                     );
                   },
-                  child: Text("Entrar"),
+                  child: const Text("Entrar"),
                 ),
-                SizedBox(height: 5),
+                const SizedBox(height: 5),
                 OutlinedButton(
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignUpScreen()),
+                      MaterialPageRoute(
+                        builder: (context) => const SignUpScreen(),
+                      ),
                     );
                   },
-                  child: Text("Cadastre-se"),
+                  child: const Text("Cadastre-se"),
                 ),
-                SizedBox(height: 80),
+                const SizedBox(height: 40), // Espaçamento ajustado
                 TextButton(
                   onPressed: () {
                     _showAnonymousSignInDialog(context);
                   },
-                  child: Text("Entrar como convidado"),
+                  child: const Text("Entrar como convidado"),
                 ),
               ],
             ),

@@ -42,6 +42,7 @@ dependencies:
   latlong2: ^0.9.1
   geolocator: ^14.0.2
   permission_handler: ^12.0.1
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -72,6 +73,7 @@ flutter:
   assets:
     - assets/sign_up_data_asset.json
     - assets/salas_asset.json
+    - assets/icon.png
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -98,3 +100,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+# Flutter Launcher Icons
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon.png"

@@ -39,24 +39,19 @@ class MyApp extends StatelessWidget {
         title: 'FT Loc',
         theme: ThemeData(
           useMaterial3: true,
-          // 1. O ColorScheme é o cérebro do tema moderno.
-          // Usamos ColorScheme.fromSeed para que o Flutter gere uma paleta
-          // de cores harmoniosa a partir da sua cor principal.
+
           colorScheme: ColorScheme.fromSeed(
             seedColor: const Color(0xFF126fa2),
             brightness: Brightness.light,
-            // 'surface' agora controla tanto o fundo como as superfícies.
+
             surface: Colors.white,
-            // 'onSurface' agora controla o texto em ambos.
+
             onSurface: const Color(0xFF1f1a17),
           ),
 
-          // 2. (Opcional mas recomendado) Estilos específicos para widgets
           appBarTheme: const AppBarTheme(
-            backgroundColor: Color(
-              0xFF126fa2,
-            ), // Garante que a AppBar use a cor primária
-            foregroundColor: Colors.white, // Texto e ícones brancos na AppBar
+            backgroundColor: Color(0xFF126fa2),
+            foregroundColor: Colors.white,
             elevation: 2.0,
             titleTextStyle: TextStyle(
               fontSize: 30,
@@ -66,15 +61,13 @@ class MyApp extends StatelessWidget {
           ),
 
           floatingActionButtonTheme: const FloatingActionButtonThemeData(
-            backgroundColor: Color(0xFF126fa2), // FAB usa a cor primária
+            backgroundColor: Color(0xFF126fa2),
             foregroundColor: Colors.white,
           ),
 
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(
-                0xFF126fa2,
-              ), // Botões usam a cor primária
+              backgroundColor: const Color(0xFF126fa2),
               foregroundColor: Colors.white,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(8),
@@ -82,11 +75,9 @@ class MyApp extends StatelessWidget {
             ),
           ),
 
-          // Define a cor de texto padrão para o corpo da aplicação
           textTheme: const TextTheme(
             bodyMedium: TextStyle(color: Color(0xFF1f1a17)),
             titleLarge: TextStyle(color: Color(0xFF1f1a17)),
-            // ... pode definir outros estilos de texto aqui
           ),
         ),
         home: Wrapper(),

@@ -5,14 +5,11 @@ import 'package:ft_loc/models/current_user_model.dart';
 import 'package:ft_loc/services/firebase_auth_service.dart';
 
 class FirebaseAuthBloc extends Bloc<FirebaseAuthEvent, FirebaseAuthState> {
-  // 1. Declare uma variável final para o serviço
   final FirebaseAuthService _authService;
 
-  // 2. Receba o serviço pelo construtor
   FirebaseAuthBloc({required FirebaseAuthService authService})
-    : _authService = authService, // 3. Inicialize a variável
+    : _authService = authService,
       super(FirebaseUnauthenticated()) {
-    // Ouça a stream do serviço injetado
     _authService.firebaseAuthStream.listen((
       CurrentUserModel? currentUserModel,
     ) {

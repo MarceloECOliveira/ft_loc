@@ -81,9 +81,8 @@ class _MainScreenState extends State<MainScreen> {
                   );
                 },
               ),
-              // Mover para a lista de 'actions'
+
               IconButton(
-                // Usar IconButton que é mais apropriado para AppBars
                 icon: Icon(Icons.logout),
                 onPressed: () {
                   BlocProvider.of<FirebaseAuthBloc>(context).add(SignOutUser());

@@ -20,20 +20,14 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset(
-                  'assets/icon.png', // O mesmo caminho do pubspec.yaml
-                  width: 150, // Ajuste o tamanho como desejar
-                  height: 150,
-                ),
-                const SizedBox(
-                  height: 40,
-                ), // Espaçamento entre o ícone e o texto
+                Image.asset('assets/icon.png', width: 150, height: 150),
+                const SizedBox(height: 40),
 
                 const Text(
                   "Este é o FT Loc, um aplicativo desenvolvido com o intuito de facilitar a navegação na Faculdade de Tecnologia da Unicamp",
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 60), // Espaçamento ajustado
+                const SizedBox(height: 60),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
@@ -57,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                   },
                   child: const Text("Cadastre-se"),
                 ),
-                const SizedBox(height: 40), // Espaçamento ajustado
+                const SizedBox(height: 40),
                 TextButton(
                   onPressed: () {
                     _showAnonymousSignInDialog(context);

@@ -136,14 +136,18 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     shrinkWrap: true,
                     children: [
                       TextFormField(
+                        maxLength: 70,
                         controller: _controllerNome,
-                        decoration: const InputDecoration(labelText: "Nome*"),
+                        decoration: const InputDecoration(
+                          labelText: "Nome*",
+                          counterText: "",
+                        ),
                       ),
                       const SizedBox(height: 30),
                       DropdownMenu(
                         controller: _controllerIdade,
                         label: const Text("Selecione sua idade*"),
-                        width: 250,
+                        width: 300,
                         menuHeight: 200,
                         enableFilter: true,
                         requestFocusOnTap: true,
@@ -158,7 +162,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       DropdownMenu(
                         controller: _controllerCurso,
                         label: const Text("Selecione seu curso*"),
-                        width: 250,
+                        width: 300,
                         menuHeight: 200,
                         enableFilter: true,
                         requestFocusOnTap: true,
@@ -173,7 +177,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       DropdownMenu(
                         controller: _controllerAno,
                         label: const Text("Selecione seu ano de ingresso"),
-                        width: 250,
+                        width: 300,
                         menuHeight: 200,
                         enableFilter: true,
                         requestFocusOnTap: true,

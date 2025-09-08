@@ -133,14 +133,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         TextFormField(
+                          maxLength: 70,
                           controller: _controllerNome,
-                          decoration: InputDecoration(labelText: "Nome*"),
+                          decoration: InputDecoration(
+                            labelText: "Nome*",
+                            counterText: "",
+                          ),
                         ),
                         SizedBox(height: 30),
                         DropdownMenu(
                           controller: _controllerIdade,
                           label: const Text("Selecione sua idade*"),
-                          width: 250,
+                          width: 300,
                           menuHeight: 200,
                           enableFilter: true,
                           requestFocusOnTap: true,
@@ -155,7 +159,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         DropdownMenu(
                           controller: _controllerCurso,
                           label: const Text("Selecione seu curso*"),
-                          width: 250,
+                          width: 300,
                           menuHeight: 200,
                           enableFilter: true,
                           requestFocusOnTap: true,
@@ -170,7 +174,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         DropdownMenu(
                           controller: _controllerAno,
                           label: const Text("Selecione seu ano de ingresso"),
-                          width: 250,
+                          width: 300,
                           menuHeight: 200,
                           enableFilter: true,
                           requestFocusOnTap: true,

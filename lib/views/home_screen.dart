@@ -20,43 +20,68 @@ class HomeScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset('assets/icon.png', width: 150, height: 150),
+                SizedBox(height: 50),
+
+                Image.asset('assets/icon.png', width: 240, height: 240),
                 const SizedBox(height: 40),
 
-                const Text(
-                  "Este é o FT Loc, um aplicativo desenvolvido com o intuito de facilitar a navegação na Faculdade de Tecnologia da Unicamp",
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 60),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SignInScreen(),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      const Text(
+                        "Este é o FT Loc, um aplicativo desenvolvido com o intuito de facilitar a navegação na Faculdade de Tecnologia da Unicamp",
+                        textAlign: TextAlign.center,
                       ),
-                    );
-                  },
-                  child: const Text("Entrar"),
-                ),
-                const SizedBox(height: 5),
-                OutlinedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SignUpScreen(),
+                      const SizedBox(height: 60),
+                      Center(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              width: 125,
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignInScreen(),
+                                    ),
+                                  );
+                                },
+                                child: const Text("Entrar"),
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            SizedBox(
+                              width: 175,
+                              child: OutlinedButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SignUpScreen(),
+                                    ),
+                                  );
+                                },
+                                child: const Text("Cadastre-se"),
+                              ),
+                            ),
+                            const SizedBox(height: 40),
+                            SizedBox(
+                              width: 225,
+                              child: TextButton(
+                                onPressed: () {
+                                  _showAnonymousSignInDialog(context);
+                                },
+                                child: const Text("Entrar como convidado"),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                    );
-                  },
-                  child: const Text("Cadastre-se"),
-                ),
-                const SizedBox(height: 40),
-                TextButton(
-                  onPressed: () {
-                    _showAnonymousSignInDialog(context);
-                  },
-                  child: const Text("Entrar como convidado"),
+                    ],
+                  ),
                 ),
               ],
             ),

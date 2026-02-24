@@ -2,6 +2,8 @@
 
 Aplicativo de localização para a Faculdade de Tecnologia da Unicamp.
 
+Link da Versão Web: https://ftloc-5e0fe.web.app/
+
 Implementado até o momento:
  - Login com email e senha
  - Login anônimo
